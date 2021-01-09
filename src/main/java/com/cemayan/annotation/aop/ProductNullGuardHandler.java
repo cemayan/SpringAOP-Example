@@ -4,6 +4,7 @@ import com.cemayan.annotation.exceptions.ErrorMessage;
 import com.cemayan.annotation.exceptions.MyNullException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,8 +30,8 @@ public class ProductNullGuardHandler {
     ObjectMapper objectMapper;
 
     //@Before ProductNullGuard annotaion'ının koyulduğu metoddan önce çalışacağını belirtiyor.
-    @Around("@annotation(com.cemayan.annotation.aop.ProductNullGuard)")
-    public void checkNullValues(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Before("@annotation(com.cemayan.annotation.aop.ProductNullGuard)")
+    public void checkNullValues(JoinPoint joinPoint) throws Throwable {
 
             //Annotation'ın koyulduğu yerdeki metod'un imzasını verir.
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
